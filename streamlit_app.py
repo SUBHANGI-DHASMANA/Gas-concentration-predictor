@@ -1,6 +1,6 @@
+import streamlit as st
 from flask import Flask, render_template, request, jsonify
 import pandas as pd
-import joblib
 import numpy as np
 from sklearn.linear_model import LinearRegression
 import pickle
