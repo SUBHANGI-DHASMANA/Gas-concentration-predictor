@@ -1,12 +1,10 @@
 import streamlit as st
-from flask import Flask, render_template, request, jsonify
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
 import pickle
 
 
-app = Flask(__name__)
 df = pd.read_csv("20160930_203718.csv")
 
 X = df[['Time (s)']].values
@@ -15,25 +13,27 @@ y = df[['R1 (MOhm)']].values
 model = LinearRegression()
 model.fit(X, y)
 
-# model = joblib.load('regression_model.pkl')
-
-with open('regression_model.pkl', 'wb') as file:
-    pickle.dump(model, file)
-
+# Load the trained model
 with open('regression_model.pkl', 'rb') as file:
     model = pickle.load(file)
 
-@app.route('/')
-def index():
-    time = sorted(df['Time (s)'])
-    return render_template('index.html', time=time)
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    input_time = float(request.form['text'])
+def predict(input_time):
     prediction = model.predict(np.array([[input_time]]))
     prediction = prediction.tolist()
-    return jsonify({'prediction': prediction})
+    return prediction
+
+def main():
+    st.title('Gas Concentration Predictor')
+
+    time = sorted(df['Time (s)'])
+
+    input_time = st.text_input('Enter time:')
+    if st.button('Predict'):
+        if input_time:
+            prediction = predict(float(input_time))
+            st.write('Prediction:', prediction)
+        else:
+            st.write('Please enter a valid time.')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    main()
