@@ -24,8 +24,9 @@ def predict(input_time):
 
 def main():
     st.title('Gas Concentration Predictor')
-    st.text('A chemical detection platform composed of 14 temperature-modulated metal oxide semiconductor (MOX) gas sensors was exposed to dynamic mixtures of carbon monoxide (CO) and humid synthetic air in a gas chamber. The acquired time series of the sensors and the measured values of CO concentration, humidity and temperature inside the gas chamber are provided.')
-    st.text('This app predict the value of concentration based on the input you give. Fill the details below')
+    # st.text('A chemical detection platform composed of 14 temperature-modulated metal oxide semiconductor (MOX) gas sensors was exposed to dynamic mixtures of carbon monoxide (CO) and humid synthetic air in a gas chamber. The acquired time series of the sensors and the measured values of CO concentration, humidity and temperature inside the gas chamber are provided.')
+    st.text('This app predict the value of concentration based on the input you give.')
+    st.text('Fill the details below:-')
 
     time = sorted(df['Time (s)'])
 
